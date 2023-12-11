@@ -1,0 +1,12 @@
+<apex:page showHeader="false" sidebar="false" >
+    <apex:includeLightning />    
+    <div id="LightningComponentid" style="background:#F5F6FA;height:100vh;">    </div>
+    <script>
+    $Lightning.use("c:TestPortalLogin", function() {
+        $Lightning.createComponent("c:testPortal",
+          {},
+          "LightningComponentid",
+          function(cmp) {});
+    });
+    </script>
+</apex:page>

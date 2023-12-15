@@ -1,0 +1,285 @@
+<!--
+  @description       : 
+  @author            : 
+  @group             : 
+  @last modified on  : 12-15-2023
+  @last modified by  : D - D
+-->
+<template>
+    <c-common-toast></c-common-toast>
+
+    <div if:false={isTestEnd}>
+        <!-- Modal Container -->
+        <div style="margin-top: 71px" class={modalContainerClass}>
+            <header class="slds-modal__header slds-clearfix">
+                <div class="slds-float_right">
+                    <lightning-icon
+                        icon-name="utility:close"
+                        onclick={closeModal}
+                        size="small"
+                        variant="brand"
+                        class="slds-button__icon"
+                        alternative-text="close"
+                    ></lightning-icon>
+                </div>
+                <h2 class="slds-text-heading_medium slds-hyphenate slds-float_left">
+                    <strong> Questions</strong>
+                </h2>
+            </header>
+
+            <div class="slds-modal__content side-bar">
+                <template iterator:question={getQuestionsList}>
+                    <div class="slds-list_horizontal" key={question.value.Id} if:false={question.value.isPreview}>
+                        <div
+                            class="question-number"
+                            onclick={navigateQuestion}
+                            id={question.index}
+                            data-currrentquestionnumber={question.index}
+                        >
+                            <span style="display: none">{incrementOFCurrentIndex}</span>
+                            <!-- {question.index} -->
+                        </div>
+                        <template
+                            for:each={question.value.Test_Question_Options__r.records}
+                            for:item="option"
+                            for:index="index"
+                        >
+                            <div class="slds-var-m-left_large" key={option.Id}>
+                                <p if:false={option.isOptionSelect} class="preview-no"></p>
+                                <p if:true={option.isOptionSelect} class="preview-no preview-no-solve">&#x2713;</p>
+                            </div>
+                        </template>
+                    </div>
+                </template>
+            </div>
+        </div>
+        <!-- div for Preview all question box -->
+        <div class="main-content main-content100">
+            <!-- video and timer -->
+            <div class="main-card slds-clearfix slds-m-top_medium video-element">
+                <div class="slds-float_left">
+                    <div if:true={reverseTimeCount} class="chart-container">
+                        <svg width="100" height="100" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Outer ring -->
+                            <circle cx="50" cy="50" r="40" fill="none" stroke="#4caf50" stroke-width="6"></circle>
+
+                            <!-- Inner ring (representing data) -->
+                            <circle
+                                cx="50"
+                                cy="50"
+                                r="40"
+                                fill="none"
+                                stroke="#ff0000"
+                                stroke-width="6"
+                                stroke-dasharray={dashArray}
+                                stroke-dashoffset={dashOffset}
+                                stroke-mitterlimit="0"
+                                transform="rotate(-90 ) translate(-100 0)"
+                            ></circle>
+
+                            <!-- Text inside the ring -->
+                            <text
+                                x="50%"
+                                y="50%"
+                                dominant-baseline="middle"
+                                text-anchor="middle"
+                                fill="#333"
+                                font-size="16"
+                            >
+                                {reverseTimeCount}
+                                <!-- Use dynamic data or bind to a property -->
+                            </text>
+                        </svg>
+                    </div>
+                </div>
+                <div class="slds-float_right" style="position: relative">
+                    <video class="videoElement" autoplay muted></video>
+                    <span
+                        class="blink"
+                        style="display: flex; align-items: center; position: absolute; top: 10px; right: 10px; gap: 5px"
+                    >
+                        <div
+                            style="
+                                display: block;
+                                height: 10px;
+                                width: 10px;
+                                border-radius: 100px;
+                                background-color: red;
+                            "
+                        ></div>
+                        LIVE
+                    </span>
+                </div>
+            </div>
+
+            <div
+                class="main-card slds-card slds-clearfix slds-var-m-top_large"
+                style="padding: 1rem; display: flex; align-items: center"
+            >
+                <div class="slds-float_left">
+                    <a href="#" onclick={openPreviewForm}
+                        ><strong class="slds-text-heading_medium slds-var-m-top_x-small"
+                            >Preview All Questions.</strong
+                        ></a
+                    >
+                </div>
+                <div class="slds-clearfix" style="display: flex; align-items: center; margin-left: auto">
+                    <div style="display: flex; align-items: center; gap: 15px">
+                        <p style="margin-bottom: 0">Completed</p>
+                        <p style="margin-bottom: 0">
+                            <strong>{completedQuestions}</strong>
+                        </p>
+                    </div>
+                    <div class="slds-list_vertical-space slds-float_right slds-var-m-left_large">
+                        <div style="display: flex; align-items: center; gap: 15px">
+                            <p style="margin-bottom: 0">Not Completed</p>
+                            <p style="margin-bottom: 0">
+                                <strong>{notCompletedQuestions}</strong>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="main-card slds-card">
+                <div if:true={isLoaded}>
+                    <lightning-spinner alternative-text="Loading" size="small"> </lightning-spinner>
+                </div>
+                <div if:false={isLoaded}>
+                    <div class="slds-card__body slds-card__body_inner" if:true={currentQuestion}>
+                        <div class="header-design" style="top: 45px"></div>
+                        <small>Questions {currentQuestionNumber} of {totalQuestions}</small>
+                        <lightning-formatted-rich-text value={currentQuestion.Question__c}>
+                        </lightning-formatted-rich-text>
+                        <template
+                            for:each={currentQuestion.Test_Question_Options__r.records}
+                            for:item="child"
+                            for:index="index"
+                        >
+                            <div class="slds-clearfix slds-var-m-top_medium slds-var-m-left_large" key={child.Id}>
+                                <div if:true={currentQuestion.Multiple_Selection__c}>
+                                    <div if:true={child.isOptionSelect}>
+                                        <input
+                                            style="margin-top: 7px"
+                                            class="slds-float_left slds-var-m-top_xx-small"
+                                            type="checkbox"
+                                            id={child.Id}
+                                            data-optionnumber={index}
+                                            onclick={handelOptionSelect}
+                                            data-optionid={child.Id}
+                                            data-isradio={currentQuestion.Multiple_Selection__c}
+                                            checked
+                                            data-questionid={currentQuestion.Id}
+                                        />
+                                        <label for={child.Id} class="slds-float_left slds-var-m-left_xx-small">
+                                            <lightning-formatted-rich-text value={child.Option_Description__c}>
+                                            </lightning-formatted-rich-text>
+                                        </label>
+                                    </div>
+                                    <div if:false={child.isOptionSelect}>
+                                        <input
+                                            style="margin-top: 7px"
+                                            class="slds-float_left slds-var-m-top_xx-small"
+                                            type="checkbox"
+                                            id={child.Id}
+                                            data-optionnumber={index}
+                                            onclick={handelOptionSelect}
+                                            data-optionid={child.Id}
+                                            data-isradio={currentQuestion.Multiple_Selection__c}
+                                            data-questionid={currentQuestion.Id}
+                                        />
+                                        <label for={child.Id} class="slds-float_left slds-var-m-left_xx-small">
+                                            <lightning-formatted-rich-text value={child.Option_Description__c}>
+                                            </lightning-formatted-rich-text>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div if:false={currentQuestion.Multiple_Selection__c}>
+                                    <input
+                                        style="margin-top: 7px"
+                                        class="slds-float_left slds-var-m-top_xx-small"
+                                        type="radio"
+                                        data-optionnumber={index}
+                                        id={child.Id}
+                                        name={currentQuestion.Id}
+                                        onclick={handelOptionSelect}
+                                        data-optionid={child.Id}
+                                        data-isradio={currentQuestion.Multiple_Selection__c}
+                                        checked={child.isOptionSelect}
+                                        data-questionid={currentQuestion.Id}
+                                    />
+                                    <label for={child.Id} class="slds-float_left slds-var-m-left_xx-small">
+                                        <lightning-formatted-rich-text value={child.Option_Description__c}>
+                                        </lightning-formatted-rich-text>
+                                    </label>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
+                <footer class="slds-card__footer">
+                    <div class="slds-clearfix">
+                        <div class="slds-clearfix slds-float_left">
+                            <lightning-button
+                                style="font-size: large"
+                                label="Previous"
+                                icon-position="left"
+                                icon-name="utility:back"
+                                disabled={isFirstQuestion}
+                                variant="brand-outline"
+                                title="previous Question"
+                                onclick={handlePreviousQuestion}
+                                class="slds-m-left_x-small"
+                            >
+                            </lightning-button>
+                            <lightning-button
+                                style="font-size: large; width: 14%"
+                                label="Next"
+                                variant="brand"
+                                icon-position="left"
+                                icon-name="utility:forward"
+                                title="Next Question"
+                                disabled={isLastQuestion}
+                                onclick={handleNextQuestion}
+                                class="slds-m-left_x-small"
+                            >
+                            </lightning-button>
+                        </div>
+                        <div class="slds-float_right">
+                            <lightning-button
+                                style="font-size: large"
+                                variant="destructive"
+                                label="Submit"
+                                title="Submit"
+                                icon-position="left"
+                                icon-name="utility:success"
+                                disabled={isPreviewMode}
+                                onclick={submitTest}
+                                class="slds-m-left_x-small slds-var-m-around_x-small slds-float_right"
+                            >
+                            </lightning-button>
+                        </div>
+                    </div>
+                </footer>
+            </div>
+        </div>
+    </div>
+    <div if:true={isTestEnd}>
+        <div
+            class="main-card slds-card slds-align_absolute-center"
+            style="margin-top: 12%; margin-left: 17%; margin-right: 17%"
+        >
+            <h2 class="slds-align_absolute-center slds-text-heading_large slds-var-m-around_large">Thank You!</h2>
+            <p class="slds-align_absolute-center slds-text-heading_medium">Your message has been received.</p>
+            <button
+                class="slds-align_absolute-center slds-button--brand slds-button slds-var-m-top_large"
+                title="OK"
+                onclick={closeThankYou}
+                style="background-color: ; border-radius: 0.25rem; padding: 0.3rem 1.2rem; color: #fff !important"
+            >
+                OK
+            </button>
+        </div>
+    </div>
+</template>

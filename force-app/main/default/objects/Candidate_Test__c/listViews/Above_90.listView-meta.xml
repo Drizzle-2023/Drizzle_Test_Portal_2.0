@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Above_90</fullName>
+    <columns>NAME</columns>
+    <filterScope>Mine</filterScope>
+    <filters>
+        <field>Score__c</field>
+        <operation>greaterThan</operation>
+        <value>26</value>
+    </filters>
+    <label>Above_27</label>
+</ListView>

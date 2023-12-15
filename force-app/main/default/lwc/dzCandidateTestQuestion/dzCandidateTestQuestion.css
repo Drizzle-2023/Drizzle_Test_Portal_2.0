@@ -1,0 +1,174 @@
+.preview-no {
+    background-color: #ebebeb;
+    width: 30px;
+    height: 30px;
+    border-radius: 100%;
+    text-align: center;
+    font-weight: bold;
+    padding-bottom: 25px;
+    margin-bottom: 1rem;
+}
+
+.question-number {
+    display: flex;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    height: 30px;
+    width: 30px;
+    background-color: rgb(238 238 238);
+    color: black;
+    border-radius: 100px;
+    border: 1px solid #9ea0a2;
+}
+
+.preview-no-solve {
+    background-color: green;
+    border: 1px solid black;
+    color: white;
+    text-align: center;
+    padding-top: 3px;
+}
+
+.main-card {
+    display: block;
+    position: relative;
+    padding: 2rem;
+    margin-right: 50px;
+    margin-left: 50px;
+    border-radius: 16px;
+    color: #000000;
+    border: 1px solid #d3d3d3;
+    background: #fff;
+    box-shadow: -3px 9px 17px 7px rgba(0, 0, 0, 0.05);
+}
+.header-design {
+    display: block;
+    height: 45px;
+    width: 5px;
+    border-radius: 0 8px 8px 0;
+    background-color: #0072ff;
+    position: absolute;
+    top: 45px;
+    left: 0;
+}
+
+.modal.right .modal-dialog {
+    position: fixed;
+    margin: auto;
+    width: 320px;
+    height: 100%;
+    -webkit-transform: translate3d(0%, 0, 0);
+    -ms-transform: translate3d(0%, 0, 0);
+    -o-transform: translate3d(0%, 0, 0);
+    transform: translate3d(0%, 0, 0);
+}
+
+.modal.right .modal-content {
+    height: 100%;
+    overflow-y: auto;
+}
+
+.modal.right .modal-body {
+    padding: 15px 15px 80px;
+}
+
+/*Right*/
+.slds-modal_container_right {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 320px; /* Set your desired width */
+    height: 100%;
+    background-color: #ffffff; /* Set your desired background color */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2); /* Optional: Add a box shadow for better visibility */
+    transform: translateX(100%);
+    transition: transform 0.3s ease-out;
+    z-index: 1000; /* Adjust the z-index as needed */
+}
+
+.slds-modal_container_right.slds-fade-in-open {
+    transform: translateX(0);
+}
+
+.slds-modal__content {
+    height: 100%; /* Ensure the modal content takes up the full height */
+    display: flex;
+    flex-direction: column;
+    padding: 16px; /* Set your desired padding */
+}
+
+.main-content100 {
+    width: 100%;
+}
+
+.main-content75 {
+    width: 75%;
+}
+
+.side-bar {
+    height: 100vh;
+    display: block;
+    padding-bottom: 10rem;
+}
+
+.timer-container {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.timer {
+    width: 80%;
+    height: 80%;
+    border-radius: 50%;
+    background-color: #3498db;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #ffffff;
+    font-size: 24px;
+    font-weight: bold;
+    box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.2);
+    transform: rotate(0deg);
+    transition: transform 1s linear;
+}
+
+.videoElement {
+    width: 164px;
+    height: 123px;
+    border-radius: 10%;
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+}
+
+.progress-ring {
+    transform: scale(6) translate(1em, 1em);
+    position: absolute;
+}
+.chart-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.blink {
+    animation: blinker 1.5s cubic-bezier(0.5, 0, 1, 1) infinite alternate;
+}
+
+@keyframes blinker {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}

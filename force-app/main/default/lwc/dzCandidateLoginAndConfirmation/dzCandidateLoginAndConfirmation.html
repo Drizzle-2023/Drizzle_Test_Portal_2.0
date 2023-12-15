@@ -1,0 +1,140 @@
+<!--
+  @description       : 
+  @author            : 
+  @group             : 
+  @last modified on  : 12-14-2023
+  @last modified by  : D - D
+-->
+<template>
+    <!-- {isLoaded} -->
+    <c-common-toast></c-common-toast>
+    <div if:true={isLoaded}>
+        <lightning-spinner alternative-text="Loading" size="small"> </lightning-spinner>
+    </div>
+    <div if:false={isLoaded}>
+        <section if:true={isLoginPage} class="slds-var-m-left_xx-large">
+            <div class="slds-size--4-of-12">
+                <div if:false={isCandidateValid}>
+                    <div class="main-card">
+                        <div class="header-design"></div>
+                        <h2 class="slds-m-vertical--medium login-heading">Candidate Verification</h2>
+                        <p class="details-text">
+                            Please provide your email address and the Pass-code (shared by our HR team with you) for
+                            verification purpose.
+                        </p>
+                        <!-- input for gate user email -->
+                        <lightning-input
+                            type="text"
+                            value={candidateDetail.Email__c}
+                            placeholder="Email"
+                            name="email"
+                            class="validate custom-input"
+                            label="Email"
+                            required="true"
+                            onchange={handelFieldChange}
+                        >
+                        </lightning-input>
+                        <!-- input for gate user passcode -->
+                        <lightning-input
+                            type="password"
+                            value={candidateDetail.Pass_Code__c}
+                            placeholder="Passcode"
+                            name="passcode"
+                            class="validate custom-input"
+                            required="true"
+                            label="Passcode"
+                            onkeypress={handleEnter}
+                            onchange={handelFieldChange}
+                        >
+                        </lightning-input>
+                        <div class="button-strip">
+                            <p class="login-help-msg">Trouble while login, <a href="">Click here</a> to help.</p>
+                            <div class="ms-auto">
+                                <lightning-button
+                                    class="slds-align_absolute-center slds-m-top--small verify-candidate"
+                                    label="VERIFY"
+                                    title="Verify Candidate"
+                                    variant="brand"
+                                    disabled={isCandidateTestExist}
+                                    onclick={verifyCandidate}
+                                ></lightning-button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section for display instructions -->
+        <section class="slds-var-m-left_xx-large slds-var-m-right_xx-large" if:true={isTAndCPage}>
+            <div class="main-card">
+                <div class="header-design" style="top: 30px"></div>
+                <h2 class="slds-m-bottom_medium login-heading slds-m-top_small exam-header">Exam Instruction</h2>
+                <ol class="slds-list_ordered" style="font-size: 16px">
+                    <li class="slds-var-m-bottom_xx-small">
+                        Test will be contain (<b>{numberOfQuestions}</b>) question.
+                    </li>
+                    <li class="slds-var-m-bottom_xx-small">All question are mandatory.</li>
+                    <li class="slds-var-m-bottom_xx-small">No negative marking.</li>
+                    <li class="slds-var-m-bottom_xx-small">Ensure you have non-interrupting internet connection.</li>
+                    <li class="slds-var-m-bottom_xx-small">
+                        Make sure you use a proper laptop or computer with camera access.
+                    </li>
+                    <li class="slds-var-m-bottom_xx-small">Do not refresh page once you click on start test.</li>
+                    <li class="slds-var-m-bottom_xx-small">Do not click on 'Back' button on browser.</li>
+                    <li class="slds-var-m-bottom_xx-small">Do not switch your browser tab during the test.</li>
+                    <li class="slds-var-m-bottom_xx-small">You will be monitored using camera.</li>
+                    <li class="slds-var-m-bottom_xx-small">Use of phone is not allowed while taking a test.</li>
+                    <li class="slds-var-m-bottom_xx-small">
+                        <strong>Note:</strong> Each candidate will only be given one opportunity to take the test, no
+                        candidate will be given a second chance. Therefore, kindly make a note of that.
+                    </li>
+                </ol>
+                <div class="d-flex slds-clearfix slds-var-m-top_medium">
+                    <!-- input for terms and conditions -->
+                    <lightning-input
+                        class="slds-var-m-around_large terms-condi slds-float_left"
+                        type="checkbox"
+                        label="Please read and accept below terms and condition before starting a test."
+                        title="Terms And Conditions"
+                        onchange={confirmTermsAndConditions}
+                    >
+                    </lightning-input>
+                    <!-- proceed and back button -->
+                    <div class="slds-list_horizontal slds-var-m-around_medium slds-float_right">
+                        <lightning-button
+                            style="font-size: large"
+                            class="slds-var-m-around_medium proceed-candidate"
+                            label="Log-Out"
+                            title="Back"
+                            variant="brand-outline"
+                            icon-position="left"
+                            icon-name="utility:logout"
+                            onclick={loginPageRedirection}
+                        >
+                        </lightning-button>
+                        <lightning-button
+                            style="font-size: large"
+                            class="slds-var-m-around_medium proceed-candidate"
+                            variant="brand"
+                            label="Proceed"
+                            icon-position="right"
+                            icon-name="utility:forward"
+                            title="Proceed"
+                            disabled={isTAndC}
+                            onclick={proceedToTest}
+                        >
+                        </lightning-button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section if:true={isQuesPage}>
+            <c-dz-candidate-test-question
+                questions-list={questionList}
+                candidate={candidateDetail}
+            ></c-dz-candidate-test-question>
+        </section>
+    </div>
+</template>

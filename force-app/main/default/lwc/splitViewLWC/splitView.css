@@ -1,0 +1,28 @@
+/* .split-view {
+    display: flex;
+    height: 100%;
+    overflow: hidden;
+}
+
+.split-pane {
+    overflow: auto;
+    height: 100%;
+}
+
+.split-divider {
+    cursor: ew-resize;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 10px;
+    height: 100%;
+    background-color: #ddd;
+}
+
+.handle-icon {
+    cursor: pointer;
+}
+
+.split-divider:hover .handle-icon {
+    color: #0070d2;
+} */

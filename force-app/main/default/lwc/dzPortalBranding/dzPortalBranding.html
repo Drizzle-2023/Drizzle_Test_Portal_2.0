@@ -1,0 +1,39 @@
+<!--
+  @description       : 
+  @author            : 
+  @group             : 
+  @last modified on  : 12-14-2023
+  @last modified by  : D - D
+-->
+<template>
+    <div>
+        <div class="header-strip">
+            <div><img src={companyLogo} alt="Drizzle IT Service Logo" width="100" /></div>
+            <div class="ms-auto">
+                <a href="" class="help-link">
+                    <lightning-icon
+                        class="slds-var-m-right_x-small help-icon"
+                        icon-name="utility:help"
+                        alternative-text="alternativeText"
+                        size="x-small"
+                        variant="brand"
+                    >
+                    </lightning-icon>
+                    Help
+                </a>
+            </div>
+            <div class="slds-var-m-left_large slds-clearfix" if:true={userName}>
+                <lightning-icon
+                    icon-name="utility:profile_alt"
+                    alternative-text="User"
+                    class="slds-var-m-top_x-small slds-float_left"
+                ></lightning-icon>
+                &nbsp;
+                <div class="slds-float--right" style="margin-left: 8px">
+                    <div class="user-name" style="margin-bottom: 0">{userName}</div>
+                    <div>{todayDate}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>

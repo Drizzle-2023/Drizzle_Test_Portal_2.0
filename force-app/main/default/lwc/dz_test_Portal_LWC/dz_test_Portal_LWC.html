@@ -1,0 +1,26 @@
+<!--
+  @description       : 
+  @author            : 
+  @group             : 
+  @last modified on  : 12-13-2023
+  @last modified by  : D - D
+-->
+<template>
+    <c-common-toast></c-common-toast>
+    <div if:true={isLoaded}>
+        <lightning-spinner alternative-text="Loading..." size="large" variant="brand"> </lightning-spinner>
+    </div>
+
+    <!-- Branding -->
+    <section class="main-card">
+        <c-dz-portal-branding></c-dz-portal-branding>
+    </section>
+
+    <div style={bodyStyle}>
+        <section>
+            <c-dz-candidate-login-and-confirmation
+                onshowuserinfo={showUserInfo}
+            ></c-dz-candidate-login-and-confirmation>
+        </section>
+    </div>
+</template>

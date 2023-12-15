@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ListView xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>All</fullName>
+    <columns>NAME</columns>
+    <columns>Candidate__c</columns>
+    <columns>Result__c</columns>
+    <columns>Score__c</columns>
+    <columns>Total_Marks__c</columns>
+    <columns>percentage__c</columns>
+    <filterScope>Everything</filterScope>
+    <filters>
+        <field>CREATED_DATE</field>
+        <operation>greaterOrEqual</operation>
+        <value>8/10/2023 12:00 AM</value>
+    </filters>
+    <label>All</label>
+</ListView>

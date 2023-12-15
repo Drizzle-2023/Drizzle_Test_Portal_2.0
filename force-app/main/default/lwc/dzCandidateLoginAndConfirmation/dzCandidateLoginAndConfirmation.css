@@ -1,0 +1,86 @@
+.main-card {
+    display: block;
+    position: relative;
+    padding: 2rem;
+    border-radius: 16px;
+    color: #000000;
+    border: 1px solid #d3d3d3;
+    background: #fff;
+    box-shadow: -3px 9px 17px 7px rgba(0, 0, 0, 0.05);
+}
+.heading-color {
+    color: #0072ff;
+}
+.form {
+    width: 80%;
+    margin: auto;
+}
+.footer {
+    font-size: 14px;
+    background-color: #fff;
+    text-align: center;
+    width: 100%;
+    padding: 20px 0px;
+}
+.notice-card {
+    font-size: 12px;
+}
+.input-help {
+    position: relative;
+}
+.input-help .help-icon {
+    position: absolute;
+    right: 5px;
+    top: 25px;
+    height: 30px;
+    width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.help-popover {
+    position: absolute;
+    right: -56%;
+    top: 5px;
+}
+.login-heading {
+    position: relative;
+    font-size: 28px;
+    font-weight: 600;
+}
+.header-design {
+    display: block;
+    height: 45px;
+    width: 5px;
+    border-radius: 0 8px 8px 0;
+    background-color: #0072ff;
+    position: absolute;
+    top: 45px;
+    left: 0;
+}
+.exam-header-design {
+    top: 30px;
+}
+.details-text {
+    font-size: 0.875rem;
+    color: #5c5c5c;
+    margin-bottom: 2rem;
+}
+.custom-input {
+    margin-bottom: 1.5rem;
+}
+.button-strip {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.ms-auto {
+    margin-left: auto;
+}
+.login-help-msg {
+    color: #4d4c4c;
+}
+.exam-header {
+    margin-top: 0;
+}

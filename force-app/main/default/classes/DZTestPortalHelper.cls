@@ -2,7 +2,7 @@
  * @description       : Class Is Handel to Fetch Record, Update Record, Create Record
  * @author            : D - D
  * @group             :
- * @last modified on  : 12-13-2023
+ * @last modified on  : 12-19-2023
  * @last modified by  : D - D
  * Modifications Log
  * Ver   Date         Author   Modification
@@ -59,6 +59,12 @@ public without sharing class DZTestPortalHelper {
         }
     }
 
+    /**
+     * @description method is used to get questions list using candidte type
+     * @author D - D | 12-19-2023
+     * @param String setType
+     * @return List<Test_Questions__c>
+     **/
     private static List<Test_Questions__c> getQuestionsANdOptionsList(String setType) {
         List<Test_Set__c> testSetList;
         List<Test_Questions__c> questionAndOptionList;
@@ -91,24 +97,41 @@ public without sharing class DZTestPortalHelper {
         return questionAndOptionList;
     }
 
+    /**
+     * @description
+     * @author D - D | 12-19-2023
+     * @param Candidate__c candidate
+     **/
     public static void updateCandidate(Candidate__c candidate) {
         try {
-            // update candidate;
+            update candidate;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }
 
+    /**
+     * @description methos is used to create candidate test record when test is started.
+     * @author D - D | 12-19-2023
+     * @param Candidate_Test__c candidateTest
+     * @return Candidate_Test__c
+     **/
     public static Candidate_Test__c createCandidateTestRecord(Candidate_Test__c candidateTest) {
         try {
-            // upsert candidateTest;
+            upsert candidateTest;
             return candidateTest;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }
 
-    public static void calculateTestResult(String quesAndAnsStr, String candiatetestid) {
+    /**
+     * @description  method is used to calculate test result using json map
+     * @author D - D | 12-19-2023
+     * @param String quesAndAnsStr
+     * @param String candiatetestid
+     **/
+    public static void calculateTestResult(String quesAndAnsStr, String candiatetestid, Integer totalQuestionSize) {
         try {
             Map<String, Set<String>> quesAndAnsMap = (Map<String, Set<String>>) JSON.deserialize(
                 quesAndAnsStr,
@@ -146,15 +169,22 @@ public without sharing class DZTestPortalHelper {
             Candidate_Test__c candidatetestToUpdate = new Candidate_Test__c(
                 Id = candiatetestid,
                 Score__c = totalMarks,
-                Total_Marks__c = quesAndAnsMap.keySet().size(),
+                Total_Marks__c = totalQuestionSize,
                 Json_Result__c = quesAndAnsStr
             );
-            // update candidatetestToUpdate;
+            update candidatetestToUpdate;
         } catch (Exception e) {
             throw new AuraHandledException(e.getMessage());
         }
     }
 
+    /**
+     * @description - method is used to capture photo and save as attchment
+     * @author D - D | 12-19-2023
+     * @param Id candidateId
+     * @param String photoDataUrl
+     * @return Id
+     **/
     public static Id savePhotoAsAttachment(Id candidateId, String photoDataUrl) {
         Blob photoData = EncodingUtil.base64Decode(photoDataUrl.substringAfter(','));
 

@@ -1,0 +1,25 @@
+<!--
+  @description       : 
+  @author            : 
+  @group             : 
+  @last modified on  : 09-16-2023
+  @last modified by  : 
+-->
+<template>
+  <lightning-modal-header label="Preview Form"></lightning-modal-header>
+  <lightning-modal-body if:true={questionList}>
+    <c-candidate-test-questions
+      questions-list={questionList}
+    ></c-candidate-test-questions>
+  </lightning-modal-body>
+  <lightning-modal-footer>
+    <lightning-button
+      variant="brand"
+      label="Cancel"
+      title="Cancel"
+      onclick={handleOnClick}
+      class="cssClass"
+    >
+    </lightning-button>
+  </lightning-modal-footer>
+</template>

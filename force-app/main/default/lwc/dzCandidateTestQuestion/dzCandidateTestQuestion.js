@@ -5,7 +5,7 @@
  * @description       :
  * @author            :
  * @group             :
- * @last modified on  : 12-15-2023
+ * @last modified on  : 12-19-2023
  * @last modified by  : D - D
  **/
 
@@ -201,7 +201,8 @@ export default class DzCandidateTestQuestion extends LightningElement {
     async calculateTestResult() {
         await calculateTestResult({
             quesAndAnsStr: JSON.stringify(this.getMCQMap),
-            candiatetestid: this.candidateTest.Id
+            candiatetestid: this.candidateTest.Id,
+            totalQuestionSize: this.questionsList.length
         });
     }
 
@@ -279,6 +280,7 @@ export default class DzCandidateTestQuestion extends LightningElement {
                 candidateToUpdate[Id.fieldApiName] = this.candidate.Id;
 
                 try {
+                    // alert('Tab Changed');
                     let result = await updateCandidate({ candidate: candidateToUpdate });
                 } catch (error) {
                     console.error('error: ', JSON.stringify(error));
